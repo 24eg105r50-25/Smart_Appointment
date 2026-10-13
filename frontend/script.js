@@ -10,6 +10,12 @@ form.addEventListener("submit", async function (event) {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
 
+    if (!username || !password) {
+        message.textContent = "Please enter your username and password.";
+        message.className = "error";
+        return;
+    }
+
     message.textContent = "Connecting to server...";
     message.className = "";
     submitButton.disabled = true;
@@ -29,25 +35,30 @@ form.addEventListener("submit", async function (event) {
 
         const result = await response.json();
 
+        console.log("Backend status:", response.status);
+        console.log("Backend response:", result);
+
         if (!response.ok) {
             throw new Error(
                 result.message || "Invalid username or password."
             );
         }
 
-        message.textContent =
-            result.message || "Login successful! Welcome back.";
-
-        message.className = "success";
-
+        // Save the logged-in user's details.
         sessionStorage.setItem(
             "hospitalUser",
             JSON.stringify({
                 username: result.username || username,
-                role: result.role
+                role: result.role || ""
             })
         );
 
+        // Show the success message.
+        message.textContent =
+            result.message || "Login successful! Welcome back.";
+        message.className = "success";
+
+        // Open the dashboard after successful login.
         setTimeout(function () {
             window.location.href = "dashboard.html";
         }, 1000);
@@ -59,7 +70,8 @@ form.addEventListener("submit", async function (event) {
             message.textContent =
                 "Unable to connect to the server. Please try again.";
         } else {
-            message.textContent = error.message;
+            message.textContent =
+                error.message || "Login failed. Please try again.";
         }
 
         message.className = "error";
