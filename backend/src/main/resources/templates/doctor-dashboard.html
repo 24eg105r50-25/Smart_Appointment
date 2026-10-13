@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
+=======
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
     <title>Doctor Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div class="container">
         <h1>Doctor Dashboard</h1>
+<<<<<<< HEAD
         <div class="alert error" th:if="${error}" th:text="${error}"></div>
         <div class="alert success" th:if="${success}" th:text="${success}"></div>
         <h3>Your Appointments</h3>
@@ -22,11 +26,33 @@
                     <td>
                         <form class="inline" th:if="${app.status == 'SCHEDULED'}"
                               th:action="@{/doctor/complete/{id}(id=${app.id})}" method="post">
+=======
+        <h3>Your Appointments</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Time</th>
+                    <th>Reason</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="app : ${appointments}">
+                    <td th:text="${app.patient.user.username}"></td>
+                    <td th:text="${app.appointmentTime}"></td>
+                    <td th:text="${app.reason}"></td>
+                    <td>
+                        <form th:action="@{'/doctor/complete/' + ${app.id}}" method="post">
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
                             <button type="submit">Complete</button>
                         </form>
                     </td>
                 </tr>
+<<<<<<< HEAD
                 <tr th:if="${#lists.isEmpty(appointments)}"><td colspan="5">No appointments yet.</td></tr>
+=======
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
             </tbody>
         </table>
         <a th:href="@{/dashboard}">Back to Main Dashboard</a>

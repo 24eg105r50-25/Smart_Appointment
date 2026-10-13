@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
+=======
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
     <title>Login - Smart Hospital</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<<<<<<< HEAD
     <div class="container" style="max-width:440px">
         <h2>Hospital Login</h2>
         <div class="alert error" th:if="${param.error}">Invalid username or password.</div>
         <div class="alert success" th:if="${param.logout}">You have been logged out.</div>
         <div class="alert success" th:if="${param.registered}">Account created. Please log in.</div>
+=======
+    <div class="container">
+        <h2>Hospital Login</h2>
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
         <form th:action="@{/login}" method="post">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>

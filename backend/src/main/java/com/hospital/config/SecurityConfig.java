@@ -2,19 +2,25 @@ package com.hospital.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+<<<<<<< HEAD
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+=======
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+<<<<<<< HEAD
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+=======
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +32,7 @@ public class SecurityConfig {
     }
 
     @Bean
+<<<<<<< HEAD
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
@@ -39,6 +46,13 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/register", "/error", "/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
+=======
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**").permitAll()
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
                 .requestMatchers("/patient/**").hasRole("PATIENT")
                 .requestMatchers("/doctor/**").hasRole("DOCTOR")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -53,6 +67,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+<<<<<<< HEAD
 
     /** Lets the static frontend/ pages call /api/auth/** from another origin. */
     @Bean
@@ -65,4 +80,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/api/**", cfg);
         return source;
     }
+=======
+>>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
 }
