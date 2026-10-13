@@ -1,41 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Hospital | Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Hospital | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="page">
-    <section class="card">
-      <div class="brand-mark" aria-hidden="true">+</div>
-      <p class="eyebrow">SMART HOSPITAL</p>
-      <h1>Dashboard</h1>
-<<<<<<< HEAD
-      <p class="subtext" id="welcome">You have signed in successfully.</p>
-      <button onclick="window.location.href='http://localhost:8080/login'">Open full portal</button>
-      <button id="logout">Log out</button>
+    <main class="page">
+        <section class="card">
+            <div class="brand-mark" aria-hidden="true">+</div>
+
+```
+        <p class="eyebrow">SMART HOSPITAL</p>
+        <h1>Dashboard</h1>
+
+        <p class="subtext" id="welcome">
+            You have signed in successfully.
+        </p>
+
+        <button id="logout" type="button">Log out</button>
     </section>
-  </main>
-  <script>
-    const user = JSON.parse(sessionStorage.getItem("hospitalUser") || "null");
-    if (!user) {
-      window.location.href = "index.html";
-    } else {
-      document.getElementById("welcome").textContent =
-        "Signed in as " + user.username + " (" + user.role + ").";
+</main>
+
+<script>
+    const welcome = document.getElementById("welcome");
+    const logout = document.getElementById("logout");
+
+    let user = null;
+
+    try {
+        user = JSON.parse(
+            sessionStorage.getItem("hospitalUser") || "null"
+        );
+    } catch (error) {
+        sessionStorage.removeItem("hospitalUser");
     }
-    document.getElementById("logout").addEventListener("click", () => {
-      sessionStorage.removeItem("hospitalUser");
-      window.location.href = "index.html";
+
+    if (!user) {
+        window.location.replace("index.html");
+    } else {
+        welcome.textContent =
+            "Signed in as " + user.username +
+            (user.role ? " (" + user.role + ")." : ".");
+    }
+
+    logout.addEventListener("click", function () {
+        sessionStorage.removeItem("hospitalUser");
+        window.location.href = "index.html";
     });
-  </script>
-=======
-      <p class="subtext">You have signed in successfully. Appointment and doctor management features can be added here.</p>
-      <button onclick="window.location.href='index.html'">Log out</button>
-    </section>
-  </main>
->>>>>>> bcd2ce809b79020c4779aaa106071b5c2858f4c4
+</script>
+```
+
 </body>
 </html>
