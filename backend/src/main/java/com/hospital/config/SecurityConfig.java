@@ -1,3 +1,4 @@
+
 package com.hospital.config;
 
 import org.springframework.context.annotation.Bean;
@@ -20,57 +21,66 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-@Bean
-public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-}
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
-@Bean
-public AuthenticationManager authenticationManager(
-        AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-}
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http)
+            throws Exception {
 
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(Customizer.withDefaults())
-        .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers(
-                "/login", "/register", "/error",
-                "/css/**", "/js/**", "/images/**"
-            ).permitAll()
-            .requestMatchers("/api/auth/**").permitAll()
-            .requestMatchers("/patient/**").hasRole("PATIENT")
-            .requestMatchers("/doctor/**").hasRole("DOCTOR")
-            .requestMatchers("/admin/**").hasRole("ADMIN")
-            .anyRequest().authenticated()
-        )
-        .formLogin(form -> form
-            .loginPage("/login")
-            .defaultSuccessUrl("/dashboard", true)
-            .permitAll()
-        )
-        .logout(logout -> logout.permitAll());
+        http
+            .cors(Customizer.withDefaults())
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/login", "/register", "/error",
+                    "/css/**", "/js/**", "/images/**"
+                ).permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/patient/**").hasRole("PATIENT")
+                .requestMatchers("/doctor/**").hasRole("DOCTOR")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .defaultSuccessUrl("/dashboard", true)
+                .permitAll()
+            )
+            .logout(logout -> logout.permitAll());
 
-    return http.build();
-}
+        return http.build();
+    }
 
-@Bean
-public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration cfg = new CorsConfiguration();
-    cfg.setAllowedOriginPatterns(List.of("*"));
-    cfg.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
-    cfg.setAllowedHeaders(List.of("*"));
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration cfg = new CorsConfiguration();
 
-    UrlBasedCorsConfigurationSource source =
-            new UrlBasedCorsConfigurationSource();
+        cfg.setAllowedOrigins(List.of(
+            "https://sprightly-kringle-6ef2d6.netlify.app"
+        ));
 
-    source.registerCorsConfiguration("/api/**", cfg);
-    return source;
-}
+        cfg.setAllowedMethods(List.of(
+            "GET", "POST", "OPTIONS"
+        ));
 
+        cfg.setAllowedHeaders(List.of(
+            "Content-Type", "Authorization"
+        ));
 
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/api/**", cfg);
+
+        return source;
+    }
 }
