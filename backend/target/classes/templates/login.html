@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Smart Hospital</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container" style="max-width:440px">
+        <h2>Hospital Login</h2>
+        <div class="alert error" th:if="${param.error}">Invalid username or password.</div>
+        <div class="alert success" th:if="${param.logout}">You have been logged out.</div>
+        <div class="alert success" th:if="${param.registered}">Account created. Please log in.</div>
+        <form th:action="@{/login}" method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a th:href="@{/register}">Register here</a></p>
+    </div>
+</body>
+</html>

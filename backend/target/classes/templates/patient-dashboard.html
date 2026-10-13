@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Dashboard</h1>
+        <div class="alert error" th:if="${error}" th:text="${error}"></div>
+        <div class="alert success" th:if="${success}" th:text="${success}"></div>
+
+        <h3>Book an Appointment</h3>
+        <p th:if="${#lists.isEmpty(doctors)}">No doctors are registered yet.</p>
+        <form th:action="@{/patient/book}" method="post" th:unless="${#lists.isEmpty(doctors)}">
+            <select name="doctorId" required>
+                <option th:each="doc : ${doctors}" th:value="${doc.id}"
+                        th:text="${doc.fullName + ' (' + doc.specialization + ')'}"></option>
+            </select>
+            <input type="datetime-local" name="appointmentTime" required>
+            <input type="text" name="reason" placeholder="Reason for visit">
+            <button type="submit">Book Now</button>
+        </form>
+
+        <h3>My Appointments</h3>
+        <table>
+            <thead><tr><th>Doctor</th><th>Time</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+                <tr th:each="app : ${appointments}">
+                    <td th:text="${app.doctor.fullName}"></td>
+                    <td th:text="${#temporals.format(app.appointmentTime, 'dd MMM yyyy HH:mm')}"></td>
+                    <td th:text="${app.reason}"></td>
+                    <td><span class="badge" th:classappend="${app.status}" th:text="${app.status}"></span></td>
+                    <td>
+                        <form class="inline" th:if="${app.status == 'SCHEDULED'}"
+                              th:action="@{/patient/cancel/{id}(id=${app.id})}" method="post">
+                            <button type="submit" class="danger">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(appointments)}"><td colspan="5">No appointments yet.</td></tr>
+            </tbody>
+        </table>
+        <a th:href="@{/dashboard}">Back to Main Dashboard</a>
+    </div>
+</body>
+</html>

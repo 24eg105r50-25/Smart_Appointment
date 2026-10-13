@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Hospital | Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="brand-mark" aria-hidden="true">+</div>
+      <p class="eyebrow">SMART HOSPITAL</p>
+      <h1>Welcome back</h1>
+      <p class="subtext">Sign in to manage your hospital appointments.</p>
+
+      <form id="loginForm">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" placeholder="Enter username" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+
+        <button type="submit" id="submitButton">Sign in</button>
+        <p id="message" role="status" aria-live="polite"></p>
+      </form>
+      <p class="footer">Smart care. Simple appointments.</p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

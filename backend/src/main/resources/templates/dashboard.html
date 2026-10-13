@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Smart Hospital</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, <span th:text="${username}">user</span></h1>
+        <p>Signed in as <span class="badge" th:text="${role}">ROLE</span></p>
+        <div class="menu">
+            <a th:if="${role == 'PATIENT'}" th:href="@{/patient/dashboard}">Patient Portal</a>
+            <a th:if="${role == 'DOCTOR'}" th:href="@{/doctor/dashboard}">Doctor Portal</a>
+            <a th:if="${role == 'ADMIN'}" th:href="@{/admin/dashboard}">Admin Portal</a>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</body>
+</html>

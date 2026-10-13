@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Registered patients: <strong th:text="${patientCount}">0</strong> &middot;
+           Doctors: <strong th:text="${#lists.size(doctors)}">0</strong> &middot;
+           Appointments: <strong th:text="${#lists.size(appointments)}">0</strong></p>
+
+        <h3>Doctors</h3>
+        <table>
+            <thead><tr><th>Name</th><th>Specialization</th><th>Availability</th></tr></thead>
+            <tbody>
+                <tr th:each="d : ${doctors}">
+                    <td th:text="${d.fullName}"></td>
+                    <td th:text="${d.specialization}"></td>
+                    <td th:text="${d.availability}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>All Appointments</h3>
+        <table>
+            <thead><tr><th>Patient</th><th>Doctor</th><th>Time</th><th>Status</th></tr></thead>
+            <tbody>
+                <tr th:each="a : ${appointments}">
+                    <td th:text="${a.patient != null} ? ${a.patient.fullName} : '-'"></td>
+                    <td th:text="${a.doctor != null} ? ${a.doctor.fullName} : '-'"></td>
+                    <td th:text="${a.appointmentTime != null} ? ${#temporals.format(a.appointmentTime, 'dd MMM yyyy HH:mm')} : '-'"></td>
+                    <td><span class="badge" th:classappend="${a.status}" th:text="${a.status}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/dashboard}">Back to Main Dashboard</a>
+    </div>
+</body>
+</html>

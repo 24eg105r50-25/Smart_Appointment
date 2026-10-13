@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Smart Hospital</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container" style="max-width:480px">
+        <h2>Create Account</h2>
+        <div class="alert error" th:if="${error}" th:text="${error}"></div>
+        <form th:action="@{/register}" method="post">
+            <input type="text" name="fullName" placeholder="Full name" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password (min 6 characters)" minlength="6" required>
+            <select name="role">
+                <option value="PATIENT">Patient</option>
+                <option value="DOCTOR">Doctor</option>
+            </select>
+            <input type="text" name="specialization" placeholder="Specialization (doctors only)">
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor Dashboard</h1>
+        <div class="alert error" th:if="${error}" th:text="${error}"></div>
+        <div class="alert success" th:if="${success}" th:text="${success}"></div>
+        <h3>Your Appointments</h3>
+        <table>
+            <thead><tr><th>Patient</th><th>Time</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+                <tr th:each="app : ${appointments}">
+                    <td th:text="${app.patient.fullName}"></td>
+                    <td th:text="${#temporals.format(app.appointmentTime, 'dd MMM yyyy HH:mm')}"></td>
+                    <td th:text="${app.reason}"></td>
+                    <td><span class="badge" th:classappend="${app.status}" th:text="${app.status}"></span></td>
+                    <td>
+                        <form class="inline" th:if="${app.status == 'SCHEDULED'}"
+                              th:action="@{/doctor/complete/{id}(id=${app.id})}" method="post">
+                            <button type="submit">Complete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(appointments)}"><td colspan="5">No appointments yet.</td></tr>
+            </tbody>
+        </table>
+        <a th:href="@{/dashboard}">Back to Main Dashboard</a>
+    </div>
+</body>
+</html>
